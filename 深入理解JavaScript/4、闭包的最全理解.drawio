@@ -1,0 +1,13 @@
+<mxfile host="65bd71144e">
+    <diagram id="F1Dpc2XteS0bNZqWmgFi" name="第 1 页">
+        <mxGraphModel dx="701" dy="422" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="闭包：闭包就是内部函数，引用外层作用域的自由变量就是闭包。&lt;br&gt;&lt;font style=&quot;background-color: rgb(255, 51, 51);&quot; color=&quot;#ffff00&quot;&gt;内存泄漏（重点）：原因是，函数引用外层作用域自由变量，导致外层作用域的AO（对象）无法销毁，本该外层函数执行完销毁，实际由于被引用导致GC无法回收，所以导致内存泄漏。&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="170" width="600" height="40" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

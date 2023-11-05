@@ -1,0 +1,13 @@
+<mxfile host="65bd71144e">
+    <diagram id="f2-VG5bGpZH5uapfya0X" name="第 1 页">
+        <mxGraphModel dx="858" dy="644" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="&lt;span style=&quot;font-size: 24px;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;readonly：&lt;/span&gt;&lt;span style=&quot;font-size: 24px;&quot;&gt;接受一个对象 (不论是响应式还是普通的) 或是一个&amp;nbsp;ref，返回一个原值的只读代理，不能修改。&lt;/span&gt;&lt;span style=&quot;font-size: 24px;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;div style=&quot;&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#FF3333;labelBackgroundColor=#FFFF00;" vertex="1" parent="1">
+                    <mxGeometry x="130" y="400" width="540" height="100" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

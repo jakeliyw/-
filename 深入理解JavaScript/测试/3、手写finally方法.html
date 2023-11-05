@@ -1,0 +1,167 @@
+<!--
+ * @Author: JackLi
+ * @Date: 2023-02-08 16:33:40
+ * @LastEditors: JackLi
+ * @Description: 手写finally
+ * @LastEditTime: 2023-04-16 16:27:24
+ * @FilePath: \深入理解JavaScript\测试\2、手写finally方法.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>手写Promise中finally</title>
+  </head>
+  <body>
+    <script>
+      // 初始状态
+      const PROMISE_STATE_PENDING = "pending";
+      // 执行状态
+      const PROMISE_STATE_FULFILLED = "fulfilled";
+      // 拒绝接受状态
+      const PROMISE_STATE_REJECT = "rejected";
+
+      // 工具函数
+      function execFunctionWithCatchError(execFn, value, resolve, reject) {
+        try {
+          const result = execFn(value);
+          resolve(result);
+        } catch (err) {
+          reject(err);
+        }
+      }
+
+      class MyPromise {
+        // 1、构造器接收箭头函数
+        constructor(executor) {
+          this.state = PROMISE_STATE_PENDING; // 默认为pending
+          this.value = undefined; // .then > (res: value) => {}
+          this.reason = undefined; // .then > (err: reason) => {}
+          this.onFulfilledFns = []; // 数组是避免连续then调用，后面覆盖前面
+          this.onRejectedFns = []; // 数组是避免连续then调用，后面覆盖前面
+
+          const resolve = (value) => {
+            // 当状态pending才能去更改状态
+            if (this.state === PROMISE_STATE_PENDING) {
+              // 添加微任务异步执行，保证.then先执行
+              queueMicrotask(() => {
+                if (this.state !== PROMISE_STATE_PENDING) return;
+                this.value = value;
+                this.state = PROMISE_STATE_FULFILLED;
+                this.onFulfilledFns.forEach((fn) => fn(this.value));
+              });
+            }
+          };
+          const reject = (reason) => {
+            // 当状态pending才能去更改状态
+            if (this.state === PROMISE_STATE_PENDING) {
+              // 添加微任务异步执行，保证.then先执行
+              queueMicrotask(() => {
+                if (this.state !== PROMISE_STATE_PENDING) return;
+                this.reason = reason;
+                this.state = PROMISE_STATE_REJECT;
+                this.onRejectedFns.forEach((fn) => fn(this.reason));
+              });
+            }
+          };
+          /* 2、对应(resolve, reject) => {}*/
+          try {
+            executor(resolve, reject);
+          } catch (err) {
+            reject(err);
+          }
+        }
+        // onFulfilled: .then > res => {}，onRejected：.then > err => {}
+        then(onFulfilled, onRejected) {
+          const defaultOnRejected = (err) => {
+            throw err;
+          };
+          onRejected = onRejected || defaultOnRejected;
+
+          const defaultFulfilled = (value) => {
+            return value;
+          };
+          onFulfilled = onFulfilled || defaultFulfilled;
+
+          // 返回 MyPromise 支持链调用.then().then()
+          return new MyPromise((resolve, reject) => {
+            // 如果在then调用时，状态已经确定下来了，再次调then
+            if (this.state === PROMISE_STATE_FULFILLED) {
+              execFunctionWithCatchError(
+                onFulfilled,
+                this.value,
+                resolve,
+                reject
+              );
+            }
+            if (this.state === PROMISE_STATE_REJECT) {
+              execFunctionWithCatchError(
+                onRejected,
+                this.reason,
+                resolve,
+                reject
+              );
+            }
+            if (this.state === PROMISE_STATE_PENDING) {
+              // 将成功回调和失败回调加到数组中
+              this.onFulfilledFns.push(() => {
+                execFunctionWithCatchError(
+                  onFulfilled,
+                  this.value,
+                  resolve,
+                  reject
+                );
+              });
+
+              this.onRejectedFns.push(() => {
+                execFunctionWithCatchError(
+                  onRejected,
+                  this.reason,
+                  resolve,
+                  reject
+                );
+              });
+            }
+          });
+        }
+
+        catch(onRejected) {
+          return this.then(undefined, onRejected);
+        }
+
+        finally(onFinally) {
+          this.then(
+            () => {
+              onFinally();
+            },
+            () => {
+              onFinally();
+            }
+          );
+        }
+      }
+
+      const promise = new MyPromise((resolve, reject) => {
+        console.log("状态pending");
+        resolve(1111);
+        // reject(2222);
+      });
+      promise
+        .then((res) => {
+          console.log("res1:", res);
+          return "aaaa";
+        })
+        .then((res) => {
+          console.log("res2", res);
+        })
+        .catch((err) => {
+          console.log("err", err);
+        })
+        .finally(() => {
+          console.log("finally");
+        });
+    </script>
+  </body>
+</html>

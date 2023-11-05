@@ -1,0 +1,13 @@
+<mxfile host="65bd71144e">
+    <diagram id="OQsHAle7ooFliVL8hit4" name="第 1 页">
+        <mxGraphModel dx="2280" dy="-295" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="&lt;div style=&quot;border-color: rgb(0, 0, 0); color: rgb(255, 0, 0); font-family: Helvetica; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; font-size: 12px;&quot;&gt;&lt;/div&gt;&lt;font color=&quot;#ff0000&quot;&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;font-size: 24px;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;1、通过Object.defineProperty函数改写了数据的getter和setter函数，来实现依赖收集和派发更新 。&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;font-size: 24px;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;2、一个key值对应一个Dep实例，一个Dep实例可以包含多个Watcher。&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;font-size: 24px;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;3、Dep用于依赖的收集与管理，并通知对应的Watcher执行相应的操作。&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;font-size: 24px;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;4、依赖收集的时机是在执行render方法的时候，读取vm上的数据,触发getter函数。而派发更新即在变更数据的时候，触发setter函数，通过dep.notify()，通知到所收集的watcher，执行相应操作。&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 24px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;/font&gt;" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=#FFFF00;" vertex="1" parent="1">
+                    <mxGeometry x="-660" y="1270" width="510" height="380" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
